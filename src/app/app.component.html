@@ -60,6 +60,10 @@
           *ngIf="!signupForm.valid && signupForm.touched"
           class="help-block">Please enter valid data!</span>
         <button class="btn btn-primary" type="submit">Submit</button>
+        <br>
+        <button class="btn btn-primary" type="button" (click)="onSetValue()">SetValue</button>
+        <br>
+        <button class="btn btn-primary" type="button" (click)="onPatchValue()">PatchValue</button>
       </form>
     </div>
   </div>

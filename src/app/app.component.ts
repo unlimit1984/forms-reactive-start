@@ -12,6 +12,9 @@ export class AppComponent implements OnInit {
   signupForm: FormGroup;
   forbiddenUsernames = ['Chris', 'Anna'];
 
+
+  // this.forbiddenNames.bind(this) - bind(this), because we use 'this' inside a method 'forbiddenNames'
+  // this.forbiddenEmails - we don't need bind(this) because we don't use 'this'  inside a method 'forbiddenEmails'
   ngOnInit(): void {
     this.signupForm = new FormGroup({
       'userData': new FormGroup({
@@ -21,9 +24,9 @@ export class AppComponent implements OnInit {
       'gender': new FormControl('male'),
       'hobbies': new FormArray([])
     });
-    // this.signupForm.valueChanges.subscribe(
-    //   (value) => console.log(value)
-    // );
+    this.signupForm.valueChanges.subscribe(
+      (value) => console.log(value)
+    );
     this.signupForm.statusChanges.subscribe(
       (value) => console.log(value)
     );
@@ -45,7 +48,11 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.signupForm);
+    console.log('signupForm: ', this.signupForm);
+    console.log('this.signupForm.getRawValue(): ', this.signupForm.getRawValue());
+    const keys = Object.keys(this.signupForm.getRawValue());
+    console.log('keys: ', keys)
+
     this.signupForm.reset();
   }
 
@@ -77,5 +84,27 @@ export class AppComponent implements OnInit {
       }, 1500);
     });
     return promise;
+  }
+
+  onSetValue() {
+    this.signupForm.setValue({
+        'userData': {
+          'username': 'SettedValue',
+          'email': 'SettedValue@mail.com'
+        },
+        'gender': 'male',
+        'hobbies': ['Cooking', 'Tennis']
+      }, {emitEvent: false} // For disabling valueChanges/statusChanges event emitting
+    );
+  }
+
+  onPatchValue() {
+    this.signupForm.patchValue({
+        'userData': {
+          'email': 'PatchedValue@mail.com'
+        },
+        'hobbies': ['PatchedValue']
+      }, {emitEvent: false} // For disabling valueChanges/statusChanges event emitting
+    );
   }
 }

@@ -65,6 +65,10 @@ export class AppComponent implements OnInit {
     (<FormArray>this.signupForm.get('hobbies')).push(control);
   }
 
+  onRemoveHobby(i: number) {
+    (<FormArray>this.signupForm.get('hobbies')).removeAt(i);
+  }
+
   forbiddenNames(control: FormControl): { [s: string]: boolean } {
     if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
       return {'nameIsForbidden': true};
@@ -106,5 +110,9 @@ export class AppComponent implements OnInit {
         'hobbies': ['PatchedValue']
       }, {emitEvent: false} // For disabling valueChanges/statusChanges event emitting
     );
+  }
+
+  onRemoveOneControl() {
+    this.signupForm.removeControl('gender');
   }
 }
